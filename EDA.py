@@ -5,7 +5,7 @@ Exploratory Data Analysis for Diamond Price Prediction
 This script explores the diamond dataset step-by-step:
 - Load and understand the raw data
 - Create visualizations of key patterns
-- Identify features that matter for price prediction
+- Identify features that matter for outcome prediction
 - Remove noise and redundancy
 - Produce a clean feature set for modeling
 
@@ -77,8 +77,8 @@ target_corr = train_data.corr(numeric_only=True)['outcome'].abs().sort_values(as
 # 2. Price distribution
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 axes[0].hist(y_train, bins=50, edgecolor='black', alpha=0.7, color='steelblue')
-axes[0].set_title('Price Distribution', fontweight='bold')
-axes[0].set_xlabel('Price')
+axes[0].set_title('Outcome Distribution', fontweight='bold')
+axes[0].set_xlabel('Outcome')
 axes[0].set_ylabel('Count')
 axes[1].boxplot(y_train)
 axes[1].set_title('Outliers Check', fontweight='bold')
@@ -127,7 +127,7 @@ fig, ax = plt.subplots(figsize=(12, 6))
 ax.barh(range(len(target_corr)), target_corr.values, color='steelblue')
 ax.set_yticks(range(len(target_corr)))
 ax.set_yticklabels(target_corr.index, fontsize=9)
-ax.set_xlabel('|Correlation with Price|')
+ax.set_xlabel('|Correlation with Outcome|')
 ax.set_title('Which Features Actually Matter?', fontweight='bold')
 ax.axvline(x=TARGET_CORRELATION_THRESHOLD, color='red', linestyle='--', linewidth=2, 
            label=f'Threshold ({TARGET_CORRELATION_THRESHOLD})')
