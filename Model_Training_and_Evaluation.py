@@ -330,24 +330,7 @@ y_pred_test = best_model.predict(X_test_scaled)
 
 # Save main submission
 submission = pd.DataFrame({'yhat': y_pred_test})
-submission.to_csv('CW1_submission_best_model.csv', index=False)
-
-# ============================================================================
-# Alternative submissions from other tuned models
-# ============================================================================
-
-alternatives = {
-    'Ridge (Tuned)': tuned_scores['Ridge (Tuned)']['model'],
-    'Random Forest (Tuned)': tuned_scores['Random Forest (Tuned)']['model'],
-    'XGBoost (Tuned)': tuned_scores['XGBoost (Tuned)']['model'],
-    'LightGBM (Tuned)': tuned_scores['LightGBM (Tuned)']['model'],
-}
-
-for name, model in alternatives.items():
-    model.fit(X_train_scaled, y_train)
-    preds = model.predict(X_test_scaled)
-    filename = f"CW1_submission_{name.replace(' ', '_').replace('(', '').replace(')', '')}.csv"
-    pd.DataFrame({'yhat': preds}).to_csv(filename, index=False)
+submission.to_csv('CW1_submission_k23160103.csv', index=False)
 
 # ============================================================================
 # Summary
@@ -359,11 +342,7 @@ print("=" * 80)
 print(f"\nBest Model: {best_model_name}")
 print(f"CV R2: {best_r2:.4f}")
 print(f"\nPredictions saved to:")
-print(f"  - CW1_submission_best_model.csv")
-print(f"  - CW1_submission_Ridge_*.csv")
-print(f"  - CW1_submission_Random_*.csv")
-print(f"  - CW1_submission_XGBoost_*.csv")
-print(f"  - CW1_submission_LightGBM_*.csv")
+print(f"  - CW1_submission_k23160103.csv")
 print("=" * 80)
 
 # Save best model hyperparameters for reproducibility
