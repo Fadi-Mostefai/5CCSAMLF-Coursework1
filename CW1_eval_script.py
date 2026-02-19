@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
+import xgboost as xgb
+from sklearn.preprocessing import StandardScaler
+import json
 
 # Set seed
 np.random.seed(123)
@@ -17,14 +18,37 @@ categorical_cols = ['cut', 'color', 'clarity']
 trn = pd.get_dummies(trn, columns=categorical_cols, drop_first=True)
 X_tst = pd.get_dummies(X_tst, columns=categorical_cols, drop_first=True)
 
-# Train your model (using a simple LM here as an example)
+# Ensure test set has same columns as training set
+for col in trn.columns:
+    if col not in X_tst.columns:
+        X_tst[col] = 0
+X_tst = X_tst[trn.columns]
+
+# Prepare data
 X_trn = trn.drop(columns=['outcome'])
 y_trn = trn['outcome']
-model = LinearRegression()
-model.fit(X_trn, y_trn)
+
+# Scale features
+scaler = StandardScaler()
+X_trn_scaled = scaler.fit_transform(X_trn)
+X_tst_scaled = scaler.transform(X_tst)
+
+# Load best hyperparameters
+with open('best_model_params.json', 'r') as f:
+    params_data = json.load(f)
+    best_params = params_data['best_params']
+
+# Train XGBoost model with tuned hyperparameters
+model = xgb.XGBRegressor(
+    n_estimators=best_params['n_estimators'],
+    max_depth=best_params['max_depth'],
+    learning_rate=best_params['learning_rate'],
+    random_state=123
+)
+model.fit(X_trn_scaled, y_trn, verbose=False)
 
 # Test set predictions
-yhat_lm = model.predict(X_tst)
+yhat_lm = model.predict(X_tst_scaled)
 
 # Format submission:
 # This is a single-column CSV with nothing but your predictions
