@@ -1,0 +1,31 @@
+# Core Data Science and ML Libraries
+numpy
+pandas
+scipy
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+
+# Advanced Regression Models
+xgboost
+lightgbm
+catboost
+
+# Hyperparameter Optimization
+optuna
+
+# Utilities
+joblib
+
+# GPU Support (Optional but recommended for Windows + Nvidia)
+# Note: Uncomment below if you have CUDA installed on your system
+# cupy-cuda11x should be replaced with your CUDA version (cuda11x, cuda12x)
+# cupy-cuda12x==12.2.0
+
+# Data quality and preprocessing
+imbalanced-learn
+
+# Additional utilities
+python-dotenv
